@@ -20,11 +20,11 @@ console.log("Hello World");
 let firstName = "Jake";
 let lastName = "Bajo";
 let age = 20;
-let phoneNumber = "09317170166";
+let phoneNumber = "09317170123";
 let address = "Dapitan City, Zamboanga del Norte";
 
 console.log("User Profile");
-console.log(`My name is: ${firstName} ${lastName}`);
+console.log(`My name is ${firstName} ${lastName}`);
 console.log(`My current age is ${age}`);
 console.log(`My phone number is ${phoneNumber}`);
 console.log(`My address is ${address}`);
@@ -38,7 +38,8 @@ let realName = "Steve Rogers";
 console.log("My real name is:");
 console.log(realName);
 
-let currentAge = true;
+// let currentAge = true; //WHY IS AGE SET TO TRUE:)
+let currentAge = 20;
 console.log("My current age is: ");
 console.log(currentAge);
 
