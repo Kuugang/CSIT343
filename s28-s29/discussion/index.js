@@ -1,5 +1,20 @@
 console.log("Hello World");
 
+const deleteAllBtn = document.getElementById("delete-all");
+const divPostEntries = document.getElementById("div-post-entries");
+
+const formViewPost = document.getElementById("form-view-post");
+const formViewBtn = document.getElementById("btn-view-post");
+const formViewTxt = document.getElementById("txt-view-post");
+const divPostView = document.getElementById("div-post-view");
+
+const txtEditBody = document.getElementById("txt-edit-body");
+const txtEditTitle = document.getElementById("txt-edit-title");
+const txtEditId = document.getElementById("txt-edit-id");
+
+const formEditPost = document.getElementById("form-edit-post");
+const submitButton = document.getElementById("btn-submit-update");
+
 // [SECTION] Fetch method
 // allows us to get, post, update or even delete data in a server
 
@@ -30,10 +45,12 @@ const showPosts = (posts) => {
 
   posts.forEach((post) => {
     // console.log(post);
+    // Pass the post id to a delete button
     postEntries += `
         <div id="post-${post.id}" class="post">
             <h3 id="post-title-${post.id}">${post.title}</h3>
             <p id="post-body-${post.id}">${post.body}</p>
+            <button onclick="edit('${post.id}')">Edit</button>
             <button onclick="deletePost('${post.id}')">Delete</button>
         </div>
         `;
@@ -42,7 +59,7 @@ const showPosts = (posts) => {
   // console.log(postEntries);
   // we can add html element to another element as string by
   // updating it using innerHTML property.
-  document.getElementById("div-post-entries").innerHTML = postEntries;
+  divPostEntries.innerHTML = postEntries;
 };
 
 // Add data to our server
@@ -86,37 +103,108 @@ document
       });
   });
 
-//Activity
-const searchForm = document.getElementById("form-search-post");
-const inputId = searchForm.querySelector("#input-post-id");
-const submitBtn = searchForm.querySelector("button");
-const resultContainer = document.getElementById("search-post-result");
+function deletePost(id) {
+  // delete the post from the server
+  alert("Post deleted.");
+  fetch(`https://jsonplaceholder.typicode.com/posts/${id}`, {
+    method: "DELETE",
+  })
+    .then(function (response) {
+      return response.json();
+    })
+    .then(function (data) {
+      console.log(data);
+      document.getElementById(`post-${id}`).remove();
+    });
+}
 
-inputId.addEventListener("input", () => {
-  if (inputId.value.length > 0) submitBtn.disabled = false;
-  else submitBtn.disabled = true;
-});
+formViewPost.addEventListener("submit", function (event) {
+  event.preventDefault();
 
-searchForm.addEventListener("submit", (e) => {
-  e.preventDefault();
-
-  fetch(`https://jsonplaceholder.typicode.com/posts/${inputId.value}`)
+  fetch(`https://jsonplaceholder.typicode.com/posts/${formViewTxt.value}`)
     .then((response) => {
       if (!response.ok) {
-        throw new Error("Post not found");
+        throw new Error("Post not found.");
       }
       return response.json();
     })
     .then((data) => {
-      resultContainer.innerHTML = `
-            <h3>${data.title}</h3>
-            <p>${data.body}</p>
-        `;
+      divPostView.innerHTML = `
+                <h3 id="post-title-${data.id}">${data.title}</h3>
+                <p id="post-body-${data.id}">${data.body}</p>
+            `;
     })
     .catch((error) => {
-      resultContainer.innerHTML = error.message;
-    })
-    .finally(() => {
-      inputId.value = "";
+      divPostView.innerHTML = `
+                <p>${error.message}</p>
+            `;
     });
+});
+
+formViewTxt.addEventListener("keyup", function () {
+  if (formViewTxt.value.length > 0) {
+    formViewBtn.disabled = false;
+  } else {
+    formViewBtn.disabled = true;
+  }
+});
+
+/*
+    Mini Activity (10 mins):
+    1. Create a function called editPost(id) that will:
+        a. Get the post title from <post-title-id>
+        b. Get the post body from <post-body-id>
+        c. Populate the form fields with the retrieved data:
+            i. post ID
+            ii. post title
+            iii. post body
+        d. Enable the "Update" button by removing the disable attribute
+        e. Take a screenshot of your webpage after the form is pre-filled and send it in the chat.
+*/
+
+formEditPost.addEventListener("submit", function (event) {
+  event.preventDefault();
+  const postId = txtEditId.value;
+  const postTitle = document.getElementById(`post-title-${postId}`);
+  const postBody = document.getElementById(`post-body-${postId}`);
+
+  fetch(`https://jsonplaceholder.typicode.com/posts/${postId}`, {
+    method: "PUT",
+    body: JSON.stringify({
+      title: txtEditTitle.value,
+      body: txtEditBody.value,
+      userId: postId,
+    }),
+    headers: {
+      "Content-type": "application/json; charset=UTF-8",
+    },
+  })
+    .then(function (response) {
+      return response.json();
+    })
+    .then(function (data) {
+      console.log(data);
+      alert("Successfully updated.");
+      postTitle.innerText = txtEditTitle.value;
+      postBody.innerText = txtEditBody.value;
+
+      submitButton.setAttribute("disabled", "true");
+      txtEditTitle.value = "";
+      txtEditBody.value = "";
+    });
+});
+
+function edit(id) {
+  const postTitle = document.getElementById(`post-title-${id}`);
+  const postBody = document.getElementById(`post-body-${id}`);
+
+  txtEditId.value = id;
+  txtEditBody.value = postBody.innerText;
+  txtEditTitle.value = postTitle.innerText;
+  submitButton.removeAttribute("disabled");
+}
+
+deleteAllBtn.addEventListener("click", function () {
+  alert("All Posts Deleted");
+  divPostEntries.innerHTML = "";
 });
