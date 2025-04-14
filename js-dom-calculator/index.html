@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>JS DOM Calculator</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  </head>
+  <body class="bg-gray-100 min-h-screen flex justify-center items-center p-4">
+    <div class="bg-white rounded-lg shadow-lg p-6 w-full max-w-md mx-auto">
+      <h1 class="text-3xl font-bold text-center mb-6 text-blue-600">
+        JS Calculator
+      </h1>
+      <div class="mb-6">
+        <div id="operands-container" class="flex gap-4 mb-4">
+          <input
+            type="number"
+            class="w-1/2 border border-gray-300 rounded-md p-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            placeholder="First number"
+          />
+          <input
+            type="number"
+            class="w-1/2 border border-gray-300 rounded-md p-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            placeholder="Second number"
+          />
+        </div>
+        <div id="operators-container" class="grid grid-cols-4 gap-2">
+          <button
+            type=""
+            disabled="true"
+            class="bg-blue-500 text-white p-3 rounded-md hover:bg-blue-600 disabled:bg-blue-300 disabled:cursor-not-allowed transition-colors"
+          >
+            +
+          </button>
+          <button
+            type=""
+            disabled="true"
+            class="bg-blue-500 text-white p-3 rounded-md hover:bg-blue-600 disabled:bg-blue-300 disabled:cursor-not-allowed transition-colors"
+          >
+            -
+          </button>
+          <button
+            type=""
+            disabled="true"
+            class="bg-blue-500 text-white p-3 rounded-md hover:bg-blue-600 disabled:bg-blue-300 disabled:cursor-not-allowed transition-colors"
+          >
+            *
+          </button>
+          <button
+            type=""
+            disabled="true"
+            class="bg-blue-500 text-white p-3 rounded-md hover:bg-blue-600 disabled:bg-blue-300 disabled:cursor-not-allowed transition-colors"
+          >
+            /
+          </button>
+        </div>
+      </div>
+      <div id="memory-buttons-container" class="grid grid-cols-3 gap-2 mb-6">
+        <button
+          type=""
+          class="bg-green-500 text-white p-3 rounded-md hover:bg-green-600 transition-colors"
+        >
+          M+
+        </button>
+        <button
+          type=""
+          class="bg-green-500 text-white p-3 rounded-md hover:bg-green-600 transition-colors"
+        >
+          MR
+        </button>
+        <button
+          type=""
+          class="bg-green-500 text-white p-3 rounded-md hover:bg-green-600 transition-colors"
+        >
+          MC
+        </button>
+      </div>
+      <h1
+        id="result"
+        class="text-xl font-semibold mb-4 p-3 bg-gray-100 rounded-md"
+      >
+        Result:
+      </h1>
+      <ul
+        id="result-history"
+        class="mb-4 max-h-40 overflow-y-auto bg-gray-50 rounded-md p-2"
+      ></ul>
+      <button
+        id="btn-remove-history"
+        disabled="true"
+        class="w-full bg-red-500 text-white p-3 rounded-md hover:bg-red-600 disabled:bg-red-300 disabled:cursor-not-allowed transition-colors"
+      >
+        Clear History
+      </button>
+    </div>
+    <script src="index.js"></script>
+  </body>
+</html>
