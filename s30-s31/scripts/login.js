@@ -1,34 +1,35 @@
+//Create a Login page with an input for email and password.
 //Add Validation:
 //Implement validation for the following input fields:
 //Email: Must include @ symbol.
 //Display an error message for invalid email format.
 //Password: Must be at least 8 characters long.
 //Display an error message if shorter.
-//Confirm Password: Must match the Password field.
-//Display an error message if passwords do not match.
 //Use JavaScript event listeners for the input event to provide feedback.
 //Error message must not be visible initially.
+//Using fetch(), send the values of the email and password to the following URL:
+//https://movieapp-api-lms1.onrender.com/users/login
+//Check the response of the API. If the response is an object with property access with value as a token string.
+//Use console log to check response.
+//Show an alert() window.
+//Update your local git repository and push to git with the commit message of Add activity code s31.
 
-const registerForm = document.getElementById("register-form");
-const inputs = registerForm.getElementsByTagName("input");
+const loginForm = document.getElementById("login-form");
+const inputs = loginForm.getElementsByTagName("input");
 const emailInput = inputs[0];
 const passwordInput = inputs[1];
-const confirmPasswordInput = inputs[2];
 
 const emailInputError = document.getElementById("email-input-error");
 const passwordInputError = document.getElementById("password-input-error");
-const confirmPasswordInputError = document.getElementById(
-  "confirm-password-input-error",
-);
 
 const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
+//TODO: MAKE THIS GENERAL/REUSABLE
 function validateForm() {
   let valid = true;
 
   emailInputError.classList.add("hidden");
   passwordInputError.classList.add("hidden");
-  confirmPasswordInputError.classList.add("hidden");
 
   if (!emailRegex.test(emailInput.value)) {
     emailInputError.innerText = "Invalid email format";
@@ -43,20 +44,15 @@ function validateForm() {
     valid = false;
   }
 
-  if (passwordInput.value != confirmPasswordInput.value) {
-    confirmPasswordInputError.innerText = "Passwords do not match";
-    confirmPasswordInputError.classList.remove("hidden");
-    valid = false;
-  }
   return valid;
 }
 
-registerForm.addEventListener("submit", async (e) => {
+loginForm.addEventListener("submit", async (e) => {
   e.preventDefault();
   if (!validateForm()) return;
 
   const response = await fetch(
-    "https://movieapp-api-lms1.onrender.com/users/register",
+    "https://movieapp-api-lms1.onrender.com/users/login",
     {
       method: "POST",
       headers: {
@@ -69,7 +65,10 @@ registerForm.addEventListener("submit", async (e) => {
       }),
     },
   );
+
   if ([200, 201].includes(response.status)) {
-    alert("Register successful");
+    alert("Login successful");
   }
+  const data = await response.json();
+  console.log(data);
 });

@@ -1,34 +1,82 @@
 <!doctype html>
 <html lang="en">
   <head>
+    <style>
+      .loader {
+        position: relative;
+        width: 100px;
+        height: 16px;
+      }
+      .loader:before,
+      .loader:after {
+        content: "";
+        position: absolute;
+        width: 16px;
+        height: 16px;
+        border-radius: 50%;
+        background: black;
+        box-shadow: 32px 0 black;
+        left: 0;
+        top: 0;
+        animation: ballMoveX 1s linear infinite;
+      }
+      .loader:after {
+        box-shadow: none;
+        transform-origin: 40px 0;
+        transform: rotate(-153deg);
+        animation: rotateLoader 1s linear infinite;
+      }
+
+      @keyframes rotateLoader {
+        0%,
+        10% {
+          transform: rotate(-153deg);
+        }
+        90%,
+        100% {
+          transform: rotate(0deg);
+        }
+      }
+      @keyframes ballMoveX {
+        0%,
+        10% {
+          transform: translateX(0);
+        }
+        90%,
+        100% {
+          transform: translateX(32px);
+        }
+      }
+    </style>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Zuitt Movie Library</title>
+    <title>Movie Library</title>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
   </head>
   <body class="bg-gray-100">
     <nav class="bg-gray-800 text-white p-4 shadow-md">
       <div class="container mx-auto flex justify-between items-center">
-        <div class="font-bold text-lg">Zuitt Movie Library</div>
+        <a href="index.html" class="font-bold text-lg">My Movie Library</a>
         <div class="flex space-x-4">
-          <a href="#" class="hover:text-gray-300">Movies</a>
-          <a href="#" class="hover:text-gray-300">Login</a>
+          <a href="index.html" class="hover:text-gray-300">Movies</a>
+          <a href="login.html" class="hover:text-gray-300">Login</a>
           <a href="register.html" class="hover:text-gray-300">Register</a>
         </div>
       </div>
     </nav>
 
-    <div class="container mx-auto p-8 text-center">
-      <h1 class="text-3xl font-bold mb-4">Welcome to Zuitt Movie Library</h1>
-      <p class="mb-6">Your journey to the world of Movies Starts Now!</p>
-
-      <div class="flex justify-center">
-        <img
-          src="/api/placeholder/200/200"
-          alt="Movie and popcorn illustration"
-          class="w-32 h-32"
-        />
+    <div
+      id="movies-container"
+      class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 p-10"
+    >
+      <div
+        id="movies-loader"
+        class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex flex-col justify-center items-center gap-6"
+      >
+        <span class="loader"></span>
+        <p>Fetching Movies</p>
       </div>
     </div>
+    <script src="scripts/index.js"></script>
   </body>
 </html>

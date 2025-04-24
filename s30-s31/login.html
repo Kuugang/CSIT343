@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Movie Library - Registration</title>
+    <title>Zuitt Movie Library - Login</title>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
   </head>
   <body class="bg-gray-100">
@@ -21,10 +21,10 @@
 
     <!-- Registration Form -->
     <div class="container mx-auto max-w-md p-6">
-      <h1 class="text-2xl font-bold text-center mb-6">Registration Page</h1>
+      <h1 class="text-2xl font-bold text-center mb-6">Login Page</h1>
 
       <div class="bg-white p-6 rounded shadow-md border border-gray-200">
-        <form id="register-form">
+        <form id="login-form">
           <div class="mb-4">
             <label for="email" class="block text-gray-700 mb-1">Email:</label>
             <input
@@ -47,21 +47,6 @@
             <p class="hidden text-red-500" id="password-input-error"></p>
           </div>
 
-          <div class="mb-6">
-            <label for="confirm-password" class="block text-gray-700 mb-1"
-              >Confirm Password:</label
-            >
-            <input
-              type="password"
-              class="w-full p-2 border border-gray-300 rounded"
-              value=""
-            />
-            <p
-              class="hidden text-red-500"
-              id="confirm-password-input-error"
-            ></p>
-          </div>
-
           <div class="flex space-x-2">
             <button
               type="submit"
@@ -79,6 +64,6 @@
         </form>
       </div>
     </div>
-    <script src="scripts/register.js"></script>
+    <script src="scripts/login.js"></script>
   </body>
 </html>
